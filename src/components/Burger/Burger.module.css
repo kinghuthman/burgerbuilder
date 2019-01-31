@@ -3,6 +3,8 @@
     margin: auto;
     height: 250px;
     overflow: scroll; /*simple scroll if burger is bigger than 250px*/
+    text-align: center;
+    font-weight: bold;
     font-size: 1.2rem; /*scales the font size based on the size the user has selected*/
 }
 
