@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 //global const tends to be all caps
 const INGREDIENT_PRICES =  {
@@ -106,6 +108,9 @@ class BurgerBuilder extends Component {
         // {salad: true, meat: false, ...}
         return(
             <Aux>
+                <Modal>
+                    <OrderSummary ingredients={this.state.ingredients}/> {/* pass ingredients*/}
+                </Modal>
                 <Burger ingredients={this.state.ingredients}/> {/*graphic representation of burger that was built*/}
                 <BuildControls //area to add and remove ingredients
                 ingredientAdded={this.addIngredientHandler} //ingredientAdded holds reference to addIngredientHandler
