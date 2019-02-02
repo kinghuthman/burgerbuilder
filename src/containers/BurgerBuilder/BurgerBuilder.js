@@ -23,7 +23,29 @@ class BurgerBuilder extends Component {
             cheese: 0,
             meat: 0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        purchasable: false
+    }
+    /*method is called after add and removed handler to check whether or not to turn purchasable to true or false,
+    check the ingredients we have in state by creating a copy 'const ingredients = {...this.state.ingredients}
+    add up all the values of ingredients by turning object into an array 'const sum', that gives you the key, 
+    use map method to map into array to get each key, with ingredients and this notation [] we are accessing a certain property
+    igKey = meats, salad, bacon...
+    call reduce to reduce the array into a single number, start with 0 then function is executed on each element in this mapped array
+    sum is the updated result of the element we accessed from ingredients[igkey] + the start of the function 0, 
+    which is now constantly updated to reflect those two added together
+    call setState and set purchaseable to sum > 0
+    pass ingredients that we get from updatedIngredients using add and remove methods? 
+    now ingredients becomes updatedIngredients?*/
+    updatePurchaseState (ingredients) {
+        const sum = Object.keys( ingredients )
+            .map(igKey => {
+                return ingredients[igKey];
+            })
+            .reduce((sum, el) =>{
+                return sum + el;
+            }, 0);
+            this.setState({purchasable:sum > 0});
     }
 
     /*need old count, calculate updated count, oldCount + 1, 
@@ -46,6 +68,7 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        this.updatePurchaseState(updatedIngredients);
     }
 
     //used addIngredient logic, used subtraction where necessary
@@ -64,7 +87,7 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice - priceDeduction;
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
-        
+        this.updatePurchaseState(updatedIngredients);
     }
 
     /* which button should be enabled and disabled?
@@ -87,8 +110,9 @@ class BurgerBuilder extends Component {
                 <BuildControls //area to add and remove ingredients
                 ingredientAdded={this.addIngredientHandler} //ingredientAdded holds reference to addIngredientHandler
                 ingredientRemoved={this.removeIngredientHandler}//ingredientRemoved holds reference to removeIngredientHandler
-                disabled= {disabledInfo} 
-                price={this.state.totalPrice}/>
+                disabled= {disabledInfo} //true or false, disables buttons if not needed
+                purchasable={this.state.purchasable} //lets us know if ingredients have been selected to burger, making it able to buy
+                price={this.state.totalPrice}/> 
             </Aux>
         );
     }
