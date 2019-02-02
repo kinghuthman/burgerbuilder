@@ -96,7 +96,12 @@ class BurgerBuilder extends Component {
     /*triggered when order now button is clicked
     set state of purchasing to true*/
     purchaseHandler = () => {
-        this.setState({purchasing: true})
+        this.setState({purchasing: true});
+    }
+
+    //triggererd when backdrop is clicked
+    purchaseCancelHandler = () => {
+        this.setState({purchasing: false});
     }
 
 
@@ -116,7 +121,8 @@ class BurgerBuilder extends Component {
         // {salad: true, meat: false, ...}
         return(
             <Aux>
-            <Modal show={this.state.purchasing}> {/*only if purchasing is true, the modal is visible, show is just a random name i picked*/}
+            <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}> {/*only if purchasing is true, the modal is visible, 
+                show is just a random name i picked, backdrop/modal is gone when modalClosed is set to true */}
                     <OrderSummary ingredients={this.state.ingredients}/> {/* pass ingredients*/}
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/> {/*graphic representation of burger that was built*/}
