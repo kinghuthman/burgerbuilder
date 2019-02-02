@@ -26,7 +26,8 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchasable: false
+        purchasable: false,
+        purchasing: false //changes to true when order now button has been clicked
     }
     /*method is called after add and removed handler to check whether or not to turn purchasable to true or false,
     check the ingredients we have in state by creating a copy 'const ingredients = {...this.state.ingredients}
@@ -92,6 +93,13 @@ class BurgerBuilder extends Component {
         this.updatePurchaseState(updatedIngredients);
     }
 
+    /*triggered when order now button is clicked
+    set state of purchasing to true*/
+    purchaseHandler = () => {
+        this.setState({purchasing: true})
+    }
+
+
     /* which button should be enabled and disabled?
     a new const is created disbledInfo where we want to create a
     new object to distribute the props of  this.state.ingredients(immutable),
@@ -108,16 +116,17 @@ class BurgerBuilder extends Component {
         // {salad: true, meat: false, ...}
         return(
             <Aux>
-                <Modal>
+            <Modal show={this.state.purchasing}> {/*only if purchasing is true, the modal is visible, show is just a random name i picked*/}
                     <OrderSummary ingredients={this.state.ingredients}/> {/* pass ingredients*/}
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/> {/*graphic representation of burger that was built*/}
                 <BuildControls //area to add and remove ingredients
-                ingredientAdded={this.addIngredientHandler} //ingredientAdded holds reference to addIngredientHandler
-                ingredientRemoved={this.removeIngredientHandler}//ingredientRemoved holds reference to removeIngredientHandler
-                disabled= {disabledInfo} //true or false, disables buttons if not needed
-                purchasable={this.state.purchasable} //lets us know if ingredients have been selected to burger, making it able to buy
-                price={this.state.totalPrice}/> 
+                    ingredientAdded={this.addIngredientHandler} //ingredientAdded holds reference to addIngredientHandler
+                    ingredientRemoved={this.removeIngredientHandler}//ingredientRemoved holds reference to removeIngredientHandler
+                    disabled= {disabledInfo} //true or false, disables buttons if not needed
+                    purchasable={this.state.purchasable} //lets us know if ingredients have been selected to burger, making it able to buy
+                    ordered={this.purchaseHandler}
+                    price={this.state.totalPrice}/> 
             </Aux>
         );
     }
