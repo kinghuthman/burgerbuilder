@@ -127,6 +127,7 @@ class BurgerBuilder extends Component {
                 show is just a random name i picked, backdrop/modal is gone when modalClosed is set to true */}
                     <OrderSummary 
                     ingredients={this.state.ingredients}
+                    price={this.state.totalPrice}
                     purchaseCancelled={this.purchaseCancelHandler}
                     purchaseContinued={this.purchaseContinueHandler}/> {/* pass ingredients*/}
                 </Modal>
