@@ -1,5 +1,6 @@
 import React from 'react';
-import classes from './Button.css';
+import classes from './Button.module.css';
+
 
 /*props.children here use button like a normal button and simply wrap the content
 which should go inside with my custom button element

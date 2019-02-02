@@ -1,5 +1,6 @@
 import React from 'react';
 import Aux from '../../../hoc/Aux';
+import Button from '../../UI/Button/Button';
 
 /*title, short text, list of items, price, continue to checkout? and buttons,
 no need for wrapping element so import Aux no div,
@@ -27,8 +28,8 @@ const orderSummary = (props) => {
                 {ingredientSummary}
             </ul>
             <p> Continue to Checkout?</p>
-            <button>CANCEL</button>
-            <button>CONTINUE</button>
+            <Button btnType="Danger" clicked={props.purchaseCancelled}>CANCEL</Button>
+            <Button btnType="Success"clicked={props.purchaseContinued}>CONTINUE</Button>
         </Aux>
     )
 

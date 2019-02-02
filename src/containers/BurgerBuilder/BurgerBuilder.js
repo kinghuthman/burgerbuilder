@@ -104,7 +104,9 @@ class BurgerBuilder extends Component {
         this.setState({purchasing: false});
     }
 
-
+    purchaseContinueHandler = () => {
+        alert('You Continue!');
+    }
     /* which button should be enabled and disabled?
     a new const is created disbledInfo where we want to create a
     new object to distribute the props of  this.state.ingredients(immutable),
@@ -123,7 +125,10 @@ class BurgerBuilder extends Component {
             <Aux>
             <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}> {/*only if purchasing is true, the modal is visible, 
                 show is just a random name i picked, backdrop/modal is gone when modalClosed is set to true */}
-                    <OrderSummary ingredients={this.state.ingredients}/> {/* pass ingredients*/}
+                    <OrderSummary 
+                    ingredients={this.state.ingredients}
+                    purchaseCancelled={this.purchaseCancelHandler}
+                    purchaseContinued={this.purchaseContinueHandler}/> {/* pass ingredients*/}
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/> {/*graphic representation of burger that was built*/}
                 <BuildControls //area to add and remove ingredients
