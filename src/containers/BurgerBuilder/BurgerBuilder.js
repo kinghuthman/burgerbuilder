@@ -37,7 +37,7 @@ class BurgerBuilder extends Component {
      - call setstate and set totalPrice to newPrice & ingredients to updatedPrice*/
     addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
-        const updatedCount = oldCount +1;
+        const updatedCount = oldCount + 1;
         const updatedIngredients = {
             ...this.state.ingredients
         };
@@ -48,12 +48,46 @@ class BurgerBuilder extends Component {
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
     }
 
+    //used addIngredient logic, used subtraction where necessary
+    //should check if we have ingredients to remove
+    removeIngredientHandler = (type) => {
+        const oldCount = this.state.ingredients[type];
+        if (oldCount <= 0) {
+            return;
+        }
+        const updatedCount = oldCount - 1;
+        const updatedIngredients = {
+            ...this.state.ingredients
+        };
+        updatedIngredients[type] = updatedCount;
+        const priceDeduction = INGREDIENT_PRICES[type] ;
+        const oldPrice = this.state.totalPrice;
+        const newPrice = oldPrice - priceDeduction;
+        this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        
+    }
+
+    /* which button should be enabled and disabled?
+    a new const is created disbledInfo where we want to create a
+    new object to distribute the props of  this.state.ingredients(immutable),
+    for in loop to loop through all the keys to check if theres 0 or less,
+    returns true or false for each type,
+    */
     render(){
+        const disabledInfo = {
+            ...this.state.ingredients
+        };
+        for ( let key in disabledInfo) {
+            disabledInfo[key] = disabledInfo[key] <= 0
+        }
+        // {salad: true, meat: false, ...}
         return(
             <Aux>
                 <Burger ingredients={this.state.ingredients}/> {/*graphic representation of burger that was built*/}
                 <BuildControls //area to add and remove ingredients
-                ingredientAdded={this.addIngredientHandler}/> {/*ingredientAdded holds reference to addIngredientHandler*/}
+                ingredientAdded={this.addIngredientHandler} //ingredientAdded holds reference to addIngredientHandler
+                ingredientRemoved={this.removeIngredientHandler}//ingredientRemoved holds reference to removeIngredientHandler
+                disabled= {disabledInfo} />
             </Aux>
         );
     }
