@@ -16,4 +16,4 @@ const toolbar = (props) => (
 
 );
 
-export default toolbar;
+export default toolbar; 
